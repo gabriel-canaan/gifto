@@ -1,20 +1,18 @@
-const Gifto = artifacts.require("Gifto");
+let Gifto = artifacts.require("Gifto");
+const assertFail = require("./helpers/assertFail");
+const BigNumber = require("bignumber.js");
 
-let giftoStart;
-let newMultiSigWallet;
+let giftoDeployed;
 
-// contract("Gifto", async function(accounts) {
-//   beforeEach(async () => {
-//       giftoStart = await giftoStart.new({from: accounts[0]});
-//     });
+contract("Gifto Crowdsale Tests", async function([deployer, investor, vandal, wallet]) {
+   beforeEach(async () => {
+       giftoDeployed = await Gifto.new();
+   });
 
-contract("MultiSigWallet", function(accounts) {
-  // beforeEach(async () => {
-  //
-  // });
+   it("Can’t purchase gifto for less than the minimum buy amount", async () => {
+       await assertFail(async () => {
+           await giftoDeployed.MultiSigWallet(0x0,1,{ from: investor, value: web3.toWei(0.1, "ether") });
+       });
+   });
 
-  it('sets initial owners', async => {
-    newMultiSigWallet = await Gifto.new(0x0, 1, {from: accounts[0]});
-    // assert.isOk(newMultiSigWallet([msg.sender]));
-  });
 });

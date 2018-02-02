@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "testrpc": "./node_modules/.bin/testrpc --network_id 15",
+    "testrpc": "testrpc -i 666 --gasLimit 6721975 --gasPrice 100000000000",
     "compile": "./node_modules/.bin/truffle compile",
     "migrate": "./node_modules/.bin/truffle migrate --reset --network development",
     "test": "./node_modules/.bin/truffle test --network development",
@@ -24,10 +24,11 @@
     "ethereumjs-testrpc": "^3.9.2",
     "mocha-lcov-reporter": "^1.3.0",
     "solidity-coverage": "^0.4.9",
+    "bignumber.js": "^5.0.0",
     "truffle": "^4.0.6"
   },
   "homepage": "https://github.com/gabriel-canaan/gifto#readme",
   "dependencies": {
-  "mocha": "^5.0.0"
+    "mocha": "^5.0.0"
   }
 }
