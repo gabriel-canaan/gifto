@@ -15,4 +15,10 @@ contract("Gifto Crowdsale Tests", async function([deployer, investor, vandal, wa
        });
    });
 
+   it("Only owner can add a new owner", async () => {
+     await assertFail(async () => {
+       await giftoDeployed.addOwner(!owner)
+     });
+   });
+
 });
