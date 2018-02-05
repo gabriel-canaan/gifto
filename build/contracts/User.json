@@ -612,7 +612,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2530,
+                                  "referencedDeclaration": 2542,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -643,7 +643,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2530,
+                                  "referencedDeclaration": 2542,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1067,7 +1067,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2547,
+                                  "referencedDeclaration": 2559,
                                   "type": "contract User",
                                   "value": "this"
                                 },
@@ -1164,7 +1164,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2547,
+                                  "referencedDeclaration": 2559,
                                   "type": "contract User",
                                   "value": "this"
                                 },
@@ -3958,7 +3958,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2549,
+                                  "referencedDeclaration": 2561,
                                   "type": "contract TestGifto",
                                   "value": "this"
                                 },
@@ -6074,7 +6074,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2549,
+                              "referencedDeclaration": 2561,
                               "type": "contract TestGifto",
                               "value": "this"
                             },
@@ -10764,5 +10764,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-04T21:47:16.786Z"
+  "updatedAt": "2018-02-04T22:18:09.188Z"
 }

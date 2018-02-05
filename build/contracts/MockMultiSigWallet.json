@@ -537,20 +537,39 @@
       ],
       "name": "CoinCreation",
       "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "uint256"
+        }
+      ],
+      "name": "someFunction",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity ^0.4.11;\n\nimport '../Gifto.sol';\n\n// @dev SITMock mocks current block number\n\ncontract MockMultiSigWallet is MultiSigWallet {\n\n  modifier onlyWallet() {\n      _;\n  }\n\n}\n",
+  "source": "pragma solidity ^0.4.18;\n\nimport '../Gifto.sol';\n\n\ncontract MockMultiSigWallet is MultiSigWallet {\n\n\n    modifier onlyWallet() {\n        _;\n    }\n\n    function someFunction(uint256 a) public returns (uint) {\n        return a * 2;\n    }\n}\n",
   "sourcePath": "/home/gabriel/audits/gifto/contracts/helpers/MockMultiSigWallet.sol",
   "ast": {
     "attributes": {
       "absolutePath": "/home/gabriel/audits/gifto/contracts/helpers/MockMultiSigWallet.sol",
       "exportedSymbols": {
         "MockMultiSigWallet": [
-          2518
+          2530
         ]
       }
     },
@@ -561,7 +580,7 @@
             "solidity",
             "^",
             "0.4",
-            ".11"
+            ".18"
           ]
         },
         "id": 2510,
@@ -573,7 +592,7 @@
           "SourceUnit": 1727,
           "absolutePath": "/home/gabriel/audits/gifto/contracts/Gifto.sol",
           "file": "../Gifto.sol",
-          "scope": 2519,
+          "scope": 2531,
           "symbolAliases": [
             null
           ],
@@ -592,11 +611,11 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            2518,
+            2530,
             1726
           ],
           "name": "MockMultiSigWallet",
-          "scope": 2519
+          "scope": 2531
         },
         "children": [
           {
@@ -615,12 +634,12 @@
                 },
                 "id": 2512,
                 "name": "UserDefinedTypeName",
-                "src": "125:14:3"
+                "src": "82:14:3"
               }
             ],
             "id": 2513,
             "name": "InheritanceSpecifier",
-            "src": "125:14:3"
+            "src": "82:14:3"
           },
           {
             "attributes": {
@@ -637,34 +656,189 @@
                 "children": [],
                 "id": 2514,
                 "name": "ParameterList",
-                "src": "164:2:3"
+                "src": "124:2:3"
               },
               {
                 "children": [
                   {
                     "id": 2515,
                     "name": "PlaceholderStatement",
-                    "src": "175:1:3"
+                    "src": "137:1:3"
                   }
                 ],
                 "id": 2516,
                 "name": "Block",
-                "src": "167:14:3"
+                "src": "127:18:3"
               }
             ],
             "id": 2517,
             "name": "ModifierDefinition",
-            "src": "145:36:3"
+            "src": "105:40:3"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "someFunction",
+              "payable": false,
+              "scope": 2530,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "a",
+                      "scope": 2529,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2518,
+                        "name": "ElementaryTypeName",
+                        "src": "173:7:3"
+                      }
+                    ],
+                    "id": 2519,
+                    "name": "VariableDeclaration",
+                    "src": "173:9:3"
+                  }
+                ],
+                "id": 2520,
+                "name": "ParameterList",
+                "src": "172:11:3"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 2529,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 2521,
+                        "name": "ElementaryTypeName",
+                        "src": "200:4:3"
+                      }
+                    ],
+                    "id": 2522,
+                    "name": "VariableDeclaration",
+                    "src": "200:4:3"
+                  }
+                ],
+                "id": 2523,
+                "name": "ParameterList",
+                "src": "199:6:3"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 2523
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "*",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 2519,
+                              "type": "uint256",
+                              "value": "a"
+                            },
+                            "id": 2524,
+                            "name": "Identifier",
+                            "src": "223:1:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "32",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 2",
+                              "value": "2"
+                            },
+                            "id": 2525,
+                            "name": "Literal",
+                            "src": "227:1:3"
+                          }
+                        ],
+                        "id": 2526,
+                        "name": "BinaryOperation",
+                        "src": "223:5:3"
+                      }
+                    ],
+                    "id": 2527,
+                    "name": "Return",
+                    "src": "216:12:3"
+                  }
+                ],
+                "id": 2528,
+                "name": "Block",
+                "src": "206:29:3"
+              }
+            ],
+            "id": 2529,
+            "name": "FunctionDefinition",
+            "src": "151:84:3"
           }
         ],
-        "id": 2518,
+        "id": 2530,
         "name": "ContractDefinition",
-        "src": "94:90:3"
+        "src": "51:186:3"
       }
     ],
-    "id": 2519,
+    "id": 2531,
     "name": "SourceUnit",
-    "src": "0:185:3"
+    "src": "0:238:3"
   },
   "compiler": {
     "name": "solc",
@@ -672,5 +846,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-04T21:47:16.790Z"
+  "updatedAt": "2018-02-04T22:18:09.190Z"
 }
