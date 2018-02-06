@@ -770,7 +770,8 @@
 725
 726
 727
-728</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+728
+729</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -852,8 +853,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -930,10 +931,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -984,13 +985,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1485,6 +1486,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1509,13 +1511,13 @@
 contract ERC20Interface {
     // Get the total token supply
     function totalSupply() public constant returns (uint256 _totalSupply);
- 
+&nbsp;
     // Get the account balance of another account with address _owner
     function balanceOf(address _owner) public constant returns (uint256 balance);
- 
+&nbsp;
     // Send _value amount of tokens to address _to
     function transfer(address _to, uint256 _value) public returns (bool success);
-    
+&nbsp;
     // transfer _value amount of token approved by address _from
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success);
 &nbsp;
@@ -1524,14 +1526,14 @@ contract ERC20Interface {
 &nbsp;
     // get remaining token approved by _owner to _spender
     function allowance(address _owner, address _spender) public constant returns (uint256 remaining);
-  
+&nbsp;
     // Triggered when tokens are transferred.
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
- 
+&nbsp;
     // Triggered whenever approve(address _spender, uint256 _value) is called.
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 }
- 
+&nbsp;
 contract Gifto is ERC20Interface {
     uint256 public constant decimals = 5;
 &nbsp;
@@ -1544,37 +1546,37 @@ contract Gifto is ERC20Interface {
 &nbsp;
     // Owner of this contract
     address public owner;
- 
+&nbsp;
     // Balances Gifto for each account
     mapping(address =&gt; uint256) private balances;
-    
+&nbsp;
     // Owner of account approves the transfer of an amount to another account
     mapping(address =&gt; mapping (address =&gt; uint256)) private allowed;
 &nbsp;
     // List of approved investors
     mapping(address =&gt; bool) private approvedInvestorList;
-    
+&nbsp;
     // deposit
     mapping(address =&gt; uint256) private deposit;
-    
+&nbsp;
     // icoPercent
     uint256 public _icoPercent = 10;
-    
+&nbsp;
     // _icoSupply is the avalable unit. Initially, it is _totalSupply
     uint256 public _icoSupply = _totalSupply * _icoPercent / 100;
-    
+&nbsp;
     // minimum buy 0.3 ETH
     uint256 public _minimumBuy = 3 * 10 ** 17;
-    
+&nbsp;
     // maximum buy 25 ETH
     uint256 public _maximumBuy = 25 * 10 ** 18;
 &nbsp;
     // totalTokenSold
     uint256 public totalTokenSold = 0;
-    
+&nbsp;
     // tradable
     bool public tradable = false;
-    
+&nbsp;
     /**
      * Functions with this modifier can only be executed by the owner
      */
@@ -1591,7 +1593,7 @@ contract Gifto is ERC20Interface {
 <span class="cstat-no" title="statement not covered" >        require(_selling)</span>;
         _;
     }
-    
+&nbsp;
     /**
      * Functions with this modifier check the validity of address is investor
      */
@@ -1599,7 +1601,7 @@ contract Gifto is ERC20Interface {
 <span class="cstat-no" title="statement not covered" >        require(approvedInvestorList[msg.sender])</span>;
         _;
     }
-    
+&nbsp;
     /**
      * Functions with this modifier check the validity of msg value
      * value must greater than equal minimumBuyPrice
@@ -1611,9 +1613,9 @@ contract Gifto is ERC20Interface {
                 ( (deposit[msg.sender] + msg.value) &lt;= _maximumBuy) );
         _;
     }
-    
+&nbsp;
     /**
-     * 
+     *
      */
 <span class="fstat-no" title="function not covered" >    modifier isTradable</span>(){
 <span class="cstat-no" title="statement not covered" >        require(tradable == true || msg.sender == owner)</span>;
@@ -1626,7 +1628,7 @@ contract Gifto is ERC20Interface {
         payable {
 <span class="cstat-no" title="statement not covered" >        buyGifto()</span>;
     }
-    
+&nbsp;
     /// @dev buy function allows to buy ether. for using optional data
 <span class="fstat-no" title="function not covered" >    function buyGifto()</span>
         public
@@ -1639,78 +1641,78 @@ contract Gifto is ERC20Interface {
         // prepare transfer data
 <span class="cstat-no" title="statement not covered" >        balances[owner] -= requestedUnits</span>;
 <span class="cstat-no" title="statement not covered" >        balances[msg.sender] += requestedUnits</span>;
-        
+&nbsp;
         // increase total deposit amount
 <span class="cstat-no" title="statement not covered" >        deposit[msg.sender] += msg.value</span>;
-        
+&nbsp;
         // check total and auto turnOffSale
 <span class="cstat-no" title="statement not covered" >        totalTokenSold += requestedUnits</span>;
 <span class="cstat-no" title="statement not covered" >        if (totalTokenSold &gt;= _icoSupply){</span>
 <span class="cstat-no" title="statement not covered" >            _selling = false</span>;
         }
-        
+&nbsp;
         // submit transfer
 <span class="cstat-no" title="statement not covered" >        Transfer(owner, msg.sender, requestedUnits)</span>;
         owner.transfer(msg.value);
     }
 &nbsp;
     /// @dev Constructor
-    function Gifto() 
+    function Gifto()
         public {
         owner = msg.sender;
         setBuyPrice(_originalBuyPrice);
         balances[owner] = _totalSupply;
         Transfer(0x0, owner, _totalSupply);
     }
-    
+&nbsp;
     /// @dev Gets totalSupply
     /// @return Total supply
 <span class="fstat-no" title="function not covered" >    function totalSupply()</span>
-        public 
-        constant 
+        public
+        constant
         returns (uint256) {
 <span class="cstat-no" title="statement not covered" >        return _totalSupply;</span>
     }
-    
-    /// @dev Enables sale 
-<span class="fstat-no" title="function not covered" >    function turnOnSale() onlyOwner </span>
+&nbsp;
+    /// @dev Enables sale
+<span class="fstat-no" title="function not covered" >    function turnOnSale() onlyOwner</span>
         public {
 <span class="cstat-no" title="statement not covered" >        _selling = true</span>;
     }
 &nbsp;
     /// @dev Disables sale
-<span class="fstat-no" title="function not covered" >    function turnOffSale() onlyOwner </span>
+<span class="fstat-no" title="function not covered" >    function turnOffSale() onlyOwner</span>
         public {
 <span class="cstat-no" title="statement not covered" >        _selling = false</span>;
     }
-    
-<span class="fstat-no" title="function not covered" >    function turnOnTradable() </span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function turnOnTradable()</span>
         public
         onlyOwner{
 <span class="cstat-no" title="statement not covered" >        tradable = true</span>;
     }
-    
+&nbsp;
     /// @dev set new icoPercent
     /// @param newIcoPercent new value of icoPercent
 <span class="fstat-no" title="function not covered" >    function setIcoPercent(uint256 newIcoPercent)</span>
-        public 
+        public
         onlyOwner {
 <span class="cstat-no" title="statement not covered" >        _icoPercent = newIcoPercent</span>;
 <span class="cstat-no" title="statement not covered" >        _icoSupply = _totalSupply * _icoPercent / 100</span>;
     }
-    
+&nbsp;
     /// @dev set new _maximumBuy
     /// @param newMaximumBuy new value of _maximumBuy
 <span class="fstat-no" title="function not covered" >    function setMaximumBuy(uint256 newMaximumBuy)</span>
-        public 
+        public
         onlyOwner {
 <span class="cstat-no" title="statement not covered" >        _maximumBuy = newMaximumBuy</span>;
     }
 &nbsp;
     /// @dev Updates buy price (owner ONLY)
     /// @param newBuyPrice New buy price (in unit)
-    function setBuyPrice(uint256 newBuyPrice) 
-        onlyOwner 
+    function setBuyPrice(uint256 newBuyPrice)
+        onlyOwner
         public {
         <span class="missing-if-branch" title="else path not taken" >E</span>require(newBuyPrice&gt;0);
         _originalBuyPrice = newBuyPrice; // 3000 Gifto = 3000 00000 unit
@@ -1720,17 +1722,17 @@ contract Gifto is ERC20Interface {
         // 100,000,00000/3000 0000 ~ 33ETH =&gt; change to wei
         _maximumBuy = 10**18 * 10000000000 /_originalBuyPrice;
     }
-        
+&nbsp;
     /// @dev Gets account's balance
     /// @param _addr Address of the account
     /// @return Account balance
-<span class="fstat-no" title="function not covered" >    function balanceOf(address _addr) </span>
+<span class="fstat-no" title="function not covered" >    function balanceOf(address _addr)</span>
         public
-        constant 
+        constant
         returns (uint256) {
 <span class="cstat-no" title="statement not covered" >        return balances[_addr];</span>
     }
-    
+&nbsp;
     /// @dev check address is approved investor
     /// @param _addr address
 <span class="fstat-no" title="function not covered" >    function isApprovedInvestor(address _addr)</span>
@@ -1739,7 +1741,7 @@ contract Gifto is ERC20Interface {
         returns (bool) {
 <span class="cstat-no" title="statement not covered" >        return approvedInvestorList[_addr];</span>
     }
-    
+&nbsp;
     /// @dev get ETH deposit
     /// @param _addr address get deposit
     /// @return amount deposit of an buyer
@@ -1749,7 +1751,7 @@ contract Gifto is ERC20Interface {
         returns(uint256){
 <span class="cstat-no" title="statement not covered" >        return deposit[_addr];</span>
 }
-    
+&nbsp;
     /// @dev Adds list of new investors to the investors list and approve all
     /// @param newInvestorList Array of new investors addresses to be added
 <span class="fstat-no" title="function not covered" >    function addInvestorList(address[] newInvestorList)</span>
@@ -1769,21 +1771,21 @@ contract Gifto is ERC20Interface {
 <span class="cstat-no" title="statement not covered" >            approvedInvestorList[investorList[i]] = false</span>;
         }
     }
- 
+&nbsp;
     /// @dev Transfers the balance from msg.sender to an account
     /// @param _to Recipient address
     /// @param _amount Transfered amount in unit
     /// @return Transfer status
 <span class="fstat-no" title="function not covered" >    function transfer(address _to, uint256 _amount)</span>
-        public 
+        public
         isTradable
         returns (bool) {
-        // if sender's balance has enough unit and amount &gt;= 0, 
+        // if sender's balance has enough unit and amount &gt;= 0,
         //      and the sum is not overflow,
-        // then do transfer 
+        // then do transfer
 <span class="cstat-no" title="statement not covered" >        if ( (balances[msg.sender] &gt;= _amount) &amp;&amp;</span>
-             (_amount &gt;= 0) &amp;&amp; 
-             (balances[_to] + _amount &gt; balances[_to]) ) {  
+             (_amount &gt;= 0) &amp;&amp;
+             (balances[_to] + _amount &gt; balances[_to]) ) {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            balances[msg.sender] -= _amount</span>;
 <span class="cstat-no" title="statement not covered" >            balances[_to] += _amount</span>;
@@ -1793,7 +1795,7 @@ contract Gifto is ERC20Interface {
 <span class="cstat-no" title="statement not covered" >            return false;</span>
         }
     }
-     
+&nbsp;
     // Send _value amount of tokens from address _from to address _to
     // The transferFrom method is used for a withdraw workflow, allowing contracts to send
     // tokens on your behalf, for example to "deposit" to a contract address and/or to charge
@@ -1821,10 +1823,10 @@ contract Gifto is ERC20Interface {
 <span class="cstat-no" title="statement not covered" >            return false;</span>
         }
     }
-    
+&nbsp;
     // Allow _spender to withdraw from your account, multiple times, up to the _value amount.
     // If this function is called again it overwrites the current allowance with _value.
-<span class="fstat-no" title="function not covered" >    function approve(address _spender, uint256 _amount) </span>
+<span class="fstat-no" title="function not covered" >    function approve(address _spender, uint256 _amount)</span>
         public
         isTradable
         returns (bool success) {
@@ -1832,19 +1834,19 @@ contract Gifto is ERC20Interface {
 <span class="cstat-no" title="statement not covered" >        Approval(msg.sender, _spender, _amount)</span>;
 <span class="cstat-no" title="statement not covered" >        return true;</span>
     }
-    
+&nbsp;
     // get allowance
-<span class="fstat-no" title="function not covered" >    function allowance(address _owner, address _spender) </span>
+<span class="fstat-no" title="function not covered" >    function allowance(address _owner, address _spender)</span>
         public
-        constant 
+        constant
         returns (uint256 remaining) {
 <span class="cstat-no" title="statement not covered" >        return allowed[_owner][_spender];</span>
     }
-    
+&nbsp;
     /// @dev Withdraws Ether in contract (Owner only)
     /// @return Status of withdrawal
-<span class="fstat-no" title="function not covered" >    function withdraw() onlyOwner </span>
-        public 
+<span class="fstat-no" title="function not covered" >    function withdraw() onlyOwner</span>
+        public
         returns (bool) {
 <span class="cstat-no" title="statement not covered" >        return owner.send(this.balance);</span>
     }
@@ -2214,7 +2216,7 @@ contract MultiSigWallet {
 <span class="cstat-no" title="statement not covered" >        for (i=from; i&lt;to; i++)</span>
 <span class="cstat-no" title="statement not covered" >            _transactionIds[i - from] = transactionIdsTemp[i]</span>;
     }
-    
+&nbsp;
     /// @dev Create new coin.
 <span class="fstat-no" title="function not covered" >    function createCoin()</span>
         external
@@ -2224,13 +2226,14 @@ contract MultiSigWallet {
 <span class="cstat-no" title="statement not covered" >        CoinCreation(new Gifto())</span>;
 <span class="cstat-no" title="statement not covered" >        flag = false</span>;
     }
-}</pre></td></tr>
+}
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Feb 05 2018 09:43:35 GMT+1300 (NZDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 07 2018 09:48:56 GMT+1300 (NZDT)
 </div>
 </div>
 <script src="../prettify.js"></script>
