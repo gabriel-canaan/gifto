@@ -1,16 +1,13 @@
-pragma solidity ^0.4.18;
 
-import '../Gifto.sol';
+pragma solidity ^0.4.0;
 
-
-contract MockMultiSigWallet is MultiSigWallet {
+import "../Gifto.sol";
 
 
+contract MultiSigWalletMock is MultiSigWallet {
+    function MultiSigWalletMock(address[] _owners, uint _required) MultiSigWallet(_owners, _required) {}
+      
     modifier onlyWallet() {
         _;
-    }
-
-    function someFunction(uint256 a) public returns (uint) {
-        return a * 2;
     }
 }

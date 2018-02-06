@@ -38,22 +38,34 @@ contract("MultiSigWallet Tests", async function([deployer, investor, vandal, wal
     assert.isOk(await mswDeployed.getOwners({from: deployer}));
   });
 
-  it('Initialising the Gifto contract should trigger a transfer event which generates the tokens', async function() {
-    let event = giftoDeployed.Transfer({});
-    event.watch(function(err, res) {
-      if (!err) {
-        assert.equal(res['event'], 'Transfer');
-        event.stopWatching();
-      }
-    });
-  });
+it("Gets the balance of an address", async () => {
+  await giftoDeployed.transfer(investor, 10);
+  assert.equal(await giftoDeployed.balanceOf(investor), 10)
+});
 
-  it('Fallback functions ', async () => {
-    let y = await web3.eth.getBalance(mswDeployed.address);
-    console.log('y: ' + y);
-    assert.isOk(await mswDeployed.sendTransaction({from: vandal, to: deployer, value: 10}));
-    let x = await web3.eth.getBalance(mswDeployed.address);
-    assert.equal(y.toNumber() + 10, x.toNumber());
-  })
+it("Removes an investor from the list", async () => {
+  await giftoDeployed.addInvestorList([vandal], {from: deployer});
+  assert.equal(await giftoDeployed.isApprovedInvestor(vandal), true);
+  await giftoDeployed.removeInvestorList([vandal], {from: deployer});
+  assert.equal(await giftoDeployed.isApprovedInvestor(vandal), false);
+})
+
+it('Initialising the Gifto contract should trigger a transfer event which generates the tokens', async function() {
+let event = giftoDeployed.Transfer({});
+event.watch(function(err, res) {
+  if (!err) {
+    assert.equal(res['event'], 'Transfer');
+    event.stopWatching();
+  }
+});
+});
+
+it('Fallback functions ', async () => {
+let y = await web3.eth.getBalance(mswDeployed.address);
+console.log('y: ' + y);
+assert.isOk(await mswDeployed.sendTransaction({from: vandal, to: deployer, value: 10}));
+let x = await web3.eth.getBalance(mswDeployed.address);
+assert.equal(y.toNumber() + 10, x.toNumber());
+})
 
 });
