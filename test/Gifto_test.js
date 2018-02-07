@@ -6,10 +6,11 @@ const utils = require("./helpers/Utils");
 const BigNumber = require("bignumber.js");
 
 let giftoDeployed,
-  mswDeployed;
+  mswDeployed, deployer;
 
 contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   beforeEach(async () => {
+
     giftoDeployed = await Gifto.new();
     mswDeployed = await MSW.new([wallet], 1, {gas: 4700000});
   });
@@ -39,29 +40,55 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     assert.equal(await giftoDeployed.balanceOf(investor), 10)
   });
 
+  it('verifies the allowance after an approval', async () => {
+      await giftoDeployed.approve(investor, 500);
+      let allowance = await giftoDeployed.allowance.call(deployer, investor);
+      assert.equal(allowance, 500);
+  });
+
+  it("Transfers tokens from an approved address to another address", async () => {
+    await giftoDeployed.approve(investor, 10);
+    await giftoDeployed.transferFrom(vandal, deployer, 10, { from: investor });
+    assert.equal(await giftoDeployed.balanceOf(deployer), 10)
+  });
+
+  it('verifies that an approval fires an Approval event', async () => {
+    let res = await giftoDeployed.approve(investor, 500);
+    assert(res.logs.length > 0 && res.logs[0].event == 'Approval');
+  });
+
+  it('verifies that an approve fires an Transfer event', async () => {
+    let res = await giftoDeployed.approve(investor, 500);
+    assert.equal(res.logs[0].event, 'Approval');
+    assert.equal(res.logs[0].args._owner, deployer);
+    assert.equal(res.logs[0].args._spender, investor);
+    assert.equal(res.logs[0].args._value, 500);
+  });
+
+  it('should fail when attempting to transfer from another account more than the allowance', async () => {
+    await giftoDeployed.approve(investor, 100);
+    assertFail(async () => {
+      await giftoDeployed.transferFrom(deployer, vandal, 200, { from: investor });
+    })
+  });
+
   it("Transfer fails if funds are insufficient", async () => {
     assertFail(async () => {
       await giftoDeployed.transfer(vandal, balances[msg.sender] + 1);
     })
   })
 
-  it("Transfers tokens from an approved address to another address", async () => {
-    assert.isOk(await giftoDeployed.transferFrom(vandal, investor, 10));
-    await giftoDeployed.transfer(investor, 10);
-    assertFail(async () => {
-      await giftoDeployed.transfer(investor, 10,{from: deployer});
-    })
-    assert.equal(await giftoDeployed.balanceOf(investor), 10)
+  it('verifies that an transfer fires an Transfer event', async () => {
+    // watcher = giftoDeployed.Transfer();
+    let res = await giftoDeployed.transfer(investor, 500);
+    // logs = watcher.get();
+    assert.equal(res.logs[0].event, 'Transfer');
+    assert.equal(res.logs[0].args._from, deployer);
+    assert.equal(res.logs[0].args._to, investor);
+    assert.equal(res.logs[0].args._value, 500);
   });
 
-//   it("transferfrom more than balance", function() {
-//   var value = new BigNumber(180);
-//   return giftoDeployed.transferFrom(accounts[8], accounts[7], value, {from:accounts[9]}).then(function(){
-//       assert.fail("transfer should fail");
-//   }).catch(function(error){
-//       assert( Helpers.throwErrorMessage(error), "expected throw got " + error);
-//   });
-// });
+
 
   it("Removes an investor from the list", async () => {
     await giftoDeployed.addInvestorList([vandal], {from: deployer});
@@ -92,38 +119,9 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     assert.isOk(await mswDeployed.getOwners({from: deployer}));
   });
 
-
   // it("Adds an new owner", async () => {
   //   await mswDeployed.addOwner(deployer);
   //
   // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
