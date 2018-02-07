@@ -47,7 +47,6 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   });
 
   it("Transfers tokens from an approved address to another address", async () => {
-    await giftoDeployed.turnOnSale();
     await giftoDeployed.approve(investor, 10);
     await giftoDeployed.transferFrom(vandal, deployer, 10, { from: investor });
     assert.equal(await giftoDeployed.balanceOf(deployer), 10)
