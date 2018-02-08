@@ -6,7 +6,7 @@ const utils = require("./helpers/Utils");
 const BigNumber = require("bignumber.js");
 
 let giftoDeployed,
-  mswDeployed, deployer;
+  mswDeployed, deployer, _totalSupply, approvedInvestorList;
 
 contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   beforeEach(async () => {
@@ -123,5 +123,14 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   //   await mswDeployed.addOwner(deployer);
   //
   // })
+  it('returns the total supply', async () => {
+    let x = await giftoDeployed.totalSupply();
+    assert.equal(x, 10 ** 14)
+  })
+
+ it('checks address is approved investor', async () => {
+   await giftoDeployed.addInvestorList([deployer]);
+   assert.equal(await giftoDeployed.isApprovedInvestor(deployer), true)
+ })
 
 });
