@@ -48,16 +48,16 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     assert.equal(await giftoDeployed.balanceOf(investor), 10)
   });
 
-  it('cat coverage/lcov.info | ./node_modules/.bin/coveralls _amount from your account', async () => {
+  it('Allows _spender to withdraw _amount from your account', async () => {
     await giftoDeployed.approve(investor, 500);
     let allowance = await giftoDeployed.allowance.call(deployer, investor);
     assert.equal(allowance, 500);
   });
 
-  it.only('Gets allowance', async () => {
-    await giftoDeployed.allowance(deployer, investor);
-    assert.equal(allowed[_owner][_spender], remaining);
-  })
+  // it.only('Gets allowance', async () => {
+  //   await giftoDeployed.allowance(deployer, investor);
+  //   assert.equal(allowed[_owner][_spender], remaining);
+  // })
 
   // it("Transfers tokens from an approved address to another address", async () => {
   //   await giftoDeployed.approve(investor, 10);
