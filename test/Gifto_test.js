@@ -6,7 +6,15 @@ const utils = require("./helpers/Utils");
 const BigNumber = require("bignumber.js");
 
 let giftoDeployed,
-  mswDeployed, deployer, _totalSupply, approvedInvestorList;
+  mswDeployed,
+  deployer,
+  _totalSupply,
+  approvedInvestorList,
+  _allowed,
+  _spender,
+  remaining,
+  allowed,
+  _owner;
 
 contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   beforeEach(async () => {
@@ -40,24 +48,29 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     assert.equal(await giftoDeployed.balanceOf(investor), 10)
   });
 
-  it('verifies the allowance after an approval', async () => {
-      await giftoDeployed.approve(investor, 500);
-      let allowance = await giftoDeployed.allowance.call(deployer, investor);
-      assert.equal(allowance, 500);
-  });
+  // it('Allows _spender to withdraw _amount from your account', async () => {
+  //   await giftoDeployed.approve(investor, 500);
+  //   let allowance = await giftoDeployed.allowance.call(deployer, investor);
+  //   assert.equal(allowance, 500);
+  // });
 
-  it("Transfers tokens from an approved address to another address", async () => {
-    await giftoDeployed.approve(investor, 10);
-    await giftoDeployed.transferFrom(vandal, deployer, 10, { from: investor });
-    assert.equal(await giftoDeployed.balanceOf(deployer), 10)
-  });
+  // it('Gets allowance', async () => {
+  //   await giftoDeployed.allowance(deployer, investor);
+  //   assert.equal(allowed[_owner][_spender], remaining);
+  // })
+
+  // it("Transfers tokens from an approved address to another address", async () => {
+  //   await giftoDeployed.approve(investor, 10);
+  //   await giftoDeployed.transferFrom(vandal, deployer, 10, {from: investor});
+  //   assert.equal(await giftoDeployed.balanceOf(deployer), 10)
+  // });
 
   it('verifies that an approval fires an Approval event', async () => {
     let res = await giftoDeployed.approve(investor, 500);
     assert(res.logs.length > 0 && res.logs[0].event == 'Approval');
   });
 
-  it('verifies that an approve fires an Transfer event', async () => {
+  it('verifies that an approve fires an Approval event', async () => {
     let res = await giftoDeployed.approve(investor, 500);
     assert.equal(res.logs[0].event, 'Approval');
     assert.equal(res.logs[0].args._owner, deployer);
@@ -68,7 +81,7 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   it('should fail when attempting to transfer from another account more than the allowance', async () => {
     await giftoDeployed.approve(investor, 100);
     assertFail(async () => {
-      await giftoDeployed.transferFrom(deployer, vandal, 200, { from: investor });
+      await giftoDeployed.transferFrom(deployer, vandal, 200, {from: investor});
     })
   });
 
@@ -87,8 +100,6 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     assert.equal(res.logs[0].args._to, investor);
     assert.equal(res.logs[0].args._value, 500);
   });
-
-
 
   it("Removes an investor from the list", async () => {
     await giftoDeployed.addInvestorList([vandal], {from: deployer});
@@ -119,18 +130,35 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     assert.isOk(await mswDeployed.getOwners({from: deployer}));
   });
 
-  // it("Adds an new owner", async () => {
-  //   await mswDeployed.addOwner(deployer);
-  //
-  // })
   it('returns the total supply', async () => {
     let x = await giftoDeployed.totalSupply();
     assert.equal(x, 10 ** 14)
   })
 
- it('checks address is approved investor', async () => {
-   await giftoDeployed.addInvestorList([deployer]);
-   assert.equal(await giftoDeployed.isApprovedInvestor(deployer), true)
- })
+  it('checks address is approved investor', async () => {
+    await giftoDeployed.addInvestorList([deployer]);
+    assert.equal(await giftoDeployed.isApprovedInvestor(deployer), true)
+  })
+
+  // not mine
+  it("withdraw()", async () => {
+    await giftoDeployed.turnOnSale();
+
+    assert.equal(web3.eth.getBalance(giftoDeployed.address), 0);
+    await giftoDeployed.addInvestorList([investor], {from: deployer});
+    let original_balance = (web3.eth.getBalance(deployer)).toNumber();
+    await giftoDeployed.buyGifto({
+      from: investor,
+      value: web3.toWei(1, 'ether')
+    });
+    let new_balance = (web3.eth.getBalance(deployer)).toNumber();
+    assert.equal(new_balance > original_balance, true);
+
+    await assertFail(async () => {
+      await giftoDeployed.withdraw({from: vandal});
+    });
+    await giftoDeployed.withdraw({from: deployer});
+    assert.equal((web3.eth.getBalance(deployer)).toNumber() < new_balance, true);
+  });
 
 });
