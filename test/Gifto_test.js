@@ -18,9 +18,8 @@ let giftoDeployed,
 
 contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
   beforeEach(async () => {
-
     giftoDeployed = await Gifto.new();
-    mswDeployed = await MSW.new([wallet], 1, {gas: 4700000});
+    mswDeployed = await MSW.new([wallet], 1, {gas: 4000000});
   });
 
   it("Can’t purchase gifto for less than the minimum buy amount", async () => {
@@ -53,11 +52,6 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     let allowance = await giftoDeployed.allowance.call(deployer, investor);
     assert.equal(allowance, 500);
   });
-
-  // it.only('Gets allowance', async () => {
-  //   await giftoDeployed.allowance(deployer, investor);
-  //   assert.equal(allowed[_owner][_spender], remaining);
-  // })
 
   // it("Transfers tokens from an approved address to another address", async () => {
   //   await giftoDeployed.approve(investor, 10);
@@ -153,7 +147,6 @@ contract("Gifto Tests", async function([deployer, investor, vandal, wallet]) {
     });
     let new_balance = (web3.eth.getBalance(deployer)).toNumber();
     assert.equal(new_balance > original_balance, true);
-
     await assertFail(async () => {
       await giftoDeployed.withdraw({from: vandal});
     });
