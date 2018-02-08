@@ -31,6 +31,8 @@
   "homepage": "https://github.com/gabriel-canaan/gifto#readme",
   "dependencies": {
     "mocha": "^5.0.0",
-    "solc": "^0.4.18"
+    "solc": "^0.4.18",
+    "ascii-table": "0.0.9",
+    "solidity-parser": "^0.3.0"
   }
 }
